@@ -74,6 +74,8 @@ int main()
 		results[i] = sum;
 	}
 	//pthread_attr_destroy(&attr);
-	writeToFile(results,"pthreadResults.txt");
+	writeToFile(results,"pthreadCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"pthreadTime.txt");
 	return 0;
 }

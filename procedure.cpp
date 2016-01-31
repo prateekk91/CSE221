@@ -6,7 +6,7 @@ void dummy()
 {
 }
 
-void dummy1(int a)
+void dummy(int a)
 {
 }
 
@@ -32,70 +32,143 @@ void dummy(int a,int b,int c,int d,int e,int f,int g)
 int main()
 {
 	warmUp();
-	uint64_t start,end,results[iterations];
+	uint64_t start,end;
+	double results[iterations], sum = 0;
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy();
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy();
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure0Results.txt");
-	for(int j=0;j<iterations;++j)
-	{
-		getStartTick(start);
-		dummy1(1);
-		getEndTick(end);
-		results[j] = end-start;
-	}
-	writeToFile(results,"procedure1Results.txt");
+	writeToFile(results,"procedure0Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure0Time.txt");
+	
+	
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy(1,2);
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure2Results.txt");
+	writeToFile(results,"procedure1Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure1Time.txt");
+	
+	
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy(1,2,3);
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1,2);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure3Results.txt");
+	writeToFile(results,"procedure2Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure2Time.txt");
+	
+	
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy(1,2,3,4);
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1,2,3);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure4Results.txt");
+	writeToFile(results,"procedure3Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure3Time.txt");
+	
+	
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy(1,2,3,4,5);
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1,2,3,4);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure5Results.txt");
+	writeToFile(results,"procedure4Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure4Time.txt");
+	
+	
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy(1,2,3,4,5,6);
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1,2,3,4,5);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure6Results.txt");
+	writeToFile(results,"procedure5Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure5Time.txt");
+	
+	
 	for(int i=0;i<iterations;++i)
 	{
-		getStartTick(start);
-		dummy(1,2,3,4,5,6,7);
-		getEndTick(end);
-		results[i] = end-start;
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1,2,3,4,5,6);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
 	}
-	writeToFile(results,"procedure7Results.txt");
+	writeToFile(results,"procedure6Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure6Time.txt");
+	
+	
+	for(int i=0;i<iterations;++i)
+	{
+		sum = 0;
+		for (int j=0; j< innerLoop;j++)
+		{
+			getStartTick(start);
+			dummy(1,2,3,4,5,6,7);
+			getEndTick(end);
+			sum += end - start;
+		}
+		results[i] = sum/innerLoop;
+	}
+	writeToFile(results,"procedure7Cycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procedure7Time.txt");
+	
+	
 	return 0;
 }

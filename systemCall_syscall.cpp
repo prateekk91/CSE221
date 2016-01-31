@@ -18,6 +18,8 @@ int main()
 		getEndTick(end);
 		results[i] = end-start;
 	}
-	writeToFile(results,"systemCallResults.txt");
+	writeToFile(results,"systemCallCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"systemCallTime.txt");
 	return 0;
 }

@@ -18,6 +18,8 @@ int main()
 		sum /= innerLoop;
 		results[i] = sum;
 	}
-	writeToFile(results,"readingTimeResults.txt");
+	writeToFile(results,"readingTimeCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"readingTime.txt");
 	return 0;
 }

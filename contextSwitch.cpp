@@ -37,8 +37,9 @@ int main()
 		}
 		sum /= innerLoop;
 		results[i] = sum;
-			
-		writeToFile(results,"contextSwitchResults.txt");
 	}
+	writeToFile(results,"contextSwitchCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"contextSwitchTime.txt");
 	return 0;
 }

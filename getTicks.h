@@ -50,3 +50,11 @@ void inline warmUp()
 	getEndTick(end);
 }
 
+void getTimeFromTicks(double *results)
+{
+	for (int i=0;i<iterations;i++)
+	{
+		results[i] = results[i] / 2.592711812;
+	}
+}
+

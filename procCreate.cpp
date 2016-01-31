@@ -21,6 +21,10 @@ int main()
 			{
 				exit(0);
 			}
+			else if (pid == -1)
+			{
+				cout << "Process creation failed";
+			}
 			else
 			{
 				int returnStatus;
@@ -31,8 +35,12 @@ int main()
 			
 		}
 		sum /= innerLoop;
+//		cout << sum << endl;
 		results[i] = sum;
-		writeToFile(results,"procCreateResult.txt");
+//		cout << results[i] << endl;
 	}
+	writeToFile(results,"procCreateCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"procCreateTime.txt");
 	return 0;
 }

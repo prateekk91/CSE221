@@ -21,6 +21,8 @@ int main()
 		sum /= innerLoop;
 		results[i] = sum;
 	}
-	writeToFile(results,"loopResults.txt");
+	writeToFile(results,"loopCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"loopTime.txt");
 	return 0;
 }
