@@ -77,5 +77,8 @@ int main()
 	writeToFile(results,"pthreadCycles.txt");
 	getTimeFromTicks(results);
 	writeToFile(results,"pthreadTime.txt");
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
+	cout << "Kernel Thread creation time mean= " << meanAndVariance.first << "\n";
+	cout << "Kernel Thread creation time variance= " << meanAndVariance.second << "\n";
 	return 0;
 }

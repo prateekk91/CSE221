@@ -24,5 +24,8 @@ int main()
 	writeToFile(results,"loopCycles.txt");
 	getTimeFromTicks(results);
 	writeToFile(results,"loopTime.txt");
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
+	cout << "Loop mean= " << meanAndVariance.first << "\n";
+	cout << "Loop variance= " << meanAndVariance.second << "\n";
 	return 0;
 }

@@ -42,5 +42,8 @@ int main()
 	writeToFile(results,"procCreateCycles.txt");
 	getTimeFromTicks(results);
 	writeToFile(results,"procCreateTime.txt");
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
+	cout << "Proc create mean= " << meanAndVariance.first << "\n";
+	cout << "Proc create variance= " << meanAndVariance.second << "\n";
 	return 0;
 }

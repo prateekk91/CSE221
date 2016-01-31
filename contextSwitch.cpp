@@ -41,5 +41,8 @@ int main()
 	writeToFile(results,"contextSwitchCycles.txt");
 	getTimeFromTicks(results);
 	writeToFile(results,"contextSwitchTime.txt");
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, 100);
+	cout << "Context switch mean= " << meanAndVariance.first << "\n";
+	cout << "Context switch variance= " << meanAndVariance.second << "\n";
 	return 0;
 }

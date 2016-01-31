@@ -2,6 +2,7 @@
 #include<string>
 #include<fstream>
 # include<cstring>
+# include <utility>
 using namespace std;
 #define iterations 1000
 # define innerLoop 100
@@ -48,6 +49,23 @@ void inline warmUp()
 	getEndTick(end);
 	getStartTick(start);
 	getEndTick(end);
+}
+
+pair<double, double> inline getMeanAndVariance(double *results, int iters)
+{
+	double sum = 0;
+	double sigma = 0;
+	for (int i=0;i<iters;i++)
+	{
+		sum += results[i];
+	}
+	double mean = sum / iters;
+	for (int i=0;i<iters;i++)
+	{
+		sigma += (mean - results[i]) * (mean - results[i]);
+	}
+	double variance = sigma / iters;
+	return make_pair(mean, variance);
 }
 
 void getTimeFromTicks(double *results)

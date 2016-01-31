@@ -21,5 +21,8 @@ int main()
 	writeToFile(results,"readingTimeCycles.txt");
 	getTimeFromTicks(results);
 	writeToFile(results,"readingTime.txt");
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
+	cout << "Reading time mean= " << meanAndVariance.first << "\n";
+	cout << "Reading time variance= " << meanAndVariance.second << "\n";
 	return 0;
 }
