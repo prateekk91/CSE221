@@ -3,6 +3,7 @@
 #include<fstream>
 # include<cstring>
 # include <utility>
+# include<algorithm>
 using namespace std;
 #define iterations 1000
 # define innerLoop 100
@@ -55,16 +56,19 @@ pair<double, double> inline getMeanAndVariance(double *results, int iters)
 {
 	double sum = 0;
 	double sigma = 0;
-	for (int i=0;i<iters;i++)
+	sort(results, results+iters);
+	cout << "Median value = " << results[iters/2] << endl;
+	for (int i=10;i<iters-10;i++)
 	{
 		sum += results[i];
 	}
-	double mean = sum / iters;
-	for (int i=0;i<iters;i++)
+	double mean = sum / (iters - 20);
+	for (int i=10;i<iters-10;i++)
 	{
 		sigma += (mean - results[i]) * (mean - results[i]);
 	}
-	double variance = sigma / iters;
+	double variance = sigma / (iters-20);
+	
 	return make_pair(mean, variance);
 }
 
