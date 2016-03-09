@@ -11,15 +11,17 @@
 # include <string>
 #include <stdlib.h>
 # define FOUR_KB 4096
-# define READLIMIT 4096000
+# define ONE_MB 1048576
+//Generate 9 files, starting from file1 to ... file9, starting with 32MB, doubling up the size each time
 int main()
 {
 	warmUp();
 	uint64_t start,end;
-	static char buffer[FOUR_KB] __attribute__ ((__aligned__ (FOUR_KB)));
+	char buffer[ONE_MB];
 	string prefix = "";
 	string files[] = {"file1", "file2", "file3", "file4", "file5", "file6", "file7", "file8", "file9"};
 	double results[lessIter], sum;
+	long long int fileSize = 32 * ONE_MB;
 	for (int k=0;k<9;k++)
 	{
 		for(int i=0;i<lessIter;++i)
@@ -27,36 +29,28 @@ int main()
 			sum = 0;
 			for (int j=0;j<lessInner;j++)
 			{
-				cout << "here\n";
-				int fd = open((prefix + files[k]).c_str(), O_RDONLY | O_DIRECT);
+				int fd = open((prefix + files[k]).c_str(), O_RDONLY);
 				if (fd <= 0)
 				{
 					cout << "open failed\n";
 				}
-				else
-					cout << "Fd=" << fd << "\n";
 				int n;
 				getStartTick(start);
-				int tot = 0;
-				while ( true )
+				long long int tot = 0;
+				while ( n=read(fd, &buffer, ONE_MB) > 0)
 				{
-					n=read(fd, &buffer, FOUR_KB);
 					if (n<0)
 						cout << "Read error\n";
-					tot += n;
-					if (tot >= READLIMIT)
-						break;
 				}
 				getEndTick(end);
-//				cout << "total:" << tot << " k: " << k << "\n";
 				close (fd);
 				sum += end - start;	
 			}
 			sum /= lessInner;
 			results[i] = sum;
 		}
-		string fileName = files[k] + "SequentialCycles.txt";
-		string fileTimeName = files[k] + "SequentialTime.txt";
+		string fileName = files[k] + "Cycles.txt";
+		string fileTimeName = files[k] + "Time.txt";
 		writeToFile(results, fileName);
 		getTimeFromTicks(results, lessIter);
 		writeToFile(results, fileTimeName);
@@ -64,13 +58,17 @@ int main()
 		cout << "File: " << files[k] << "\n";
 		cout << "File read mean= " << meanAndVariance.first << "\n";
 		cout << "File read variance= " << meanAndVariance.second << "\n";
+		cout << "Average read time=" << (meanAndVariance.first * ONE_MB / fileSize) << "\n";
 		
 		ofstream myfile;
-		myfile.open ((files[k] + "sequentialResults.txt").c_str());
+		fileName = files[k] + "FileCacheResults";
+		myfile.open (fileName.c_str());
   		myfile << "File: " << files[k] << "\n";
 		myfile << "File read mean= " << meanAndVariance.first << "\n";
 		myfile << "File read variance= " << meanAndVariance.second << "\n";
+		myfile << "Average read time=" << (meanAndVariance.first * ONE_MB / fileSize) << "\n";
 		myfile.close();
+		fileSize *= 2;
 		
 	}
 	return 0;

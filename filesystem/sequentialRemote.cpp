@@ -17,7 +17,7 @@ int main()
 	warmUp();
 	uint64_t start,end;
 	static char buffer[FOUR_KB] __attribute__ ((__aligned__ (FOUR_KB)));
-	string prefix = "";
+	string prefix = "/mnt/nfs/import/";
 	string files[] = {"file1", "file2", "file3", "file4", "file5", "file6", "file7", "file8", "file9"};
 	double results[lessIter], sum;
 	for (int k=0;k<9;k++)
@@ -55,8 +55,8 @@ int main()
 			sum /= lessInner;
 			results[i] = sum;
 		}
-		string fileName = files[k] + "SequentialCycles.txt";
-		string fileTimeName = files[k] + "SequentialTime.txt";
+		string fileName = files[k] + "SequentialRemoteCycles.txt";
+		string fileTimeName = files[k] + "SequentialRemoteTime.txt";
 		writeToFile(results, fileName);
 		getTimeFromTicks(results, lessIter);
 		writeToFile(results, fileTimeName);
@@ -66,7 +66,7 @@ int main()
 		cout << "File read variance= " << meanAndVariance.second << "\n";
 		
 		ofstream myfile;
-		myfile.open ((files[k] + "sequentialResults.txt").c_str());
+		myfile.open ( (files[k] + "SequentialRemoteResults.txt").c_str());
   		myfile << "File: " << files[k] << "\n";
 		myfile << "File read mean= " << meanAndVariance.first << "\n";
 		myfile << "File read variance= " << meanAndVariance.second << "\n";
