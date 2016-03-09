@@ -17,8 +17,6 @@
 #include <fcntl.h>
 # define PORT 7000
 # define BYTES 56
-# define ONE_MB 1024*1024
-# define FIVE_MB 5*ONE_MB
 int main()
 {
 	warmUp();
@@ -28,32 +26,19 @@ int main()
 	struct addrinfo remote;
 	struct sockaddr_in remote_addr;
 	struct in_addr raddr;
-//	char buffer[ONE_MB];
+	char buffer[BYTES];
 	string message = "";
-	int buff_size = ONE_MB;
-	message.append(FIVE_MB, '.');
+
+	message.append(BYTES, '.');
 
 	remote.ai_family = AF_INET;
 	remote.ai_socktype = SOCK_STREAM;
 
-	raddr.s_addr = inet_addr(ADDR);
+	raddr.s_addr = inet_addr(ADDR_REMOTE);
 
 	remote_addr.sin_family = AF_INET;
 	remote_addr.sin_port = htons(PORT);
 	remote_addr.sin_addr = raddr;
-	
-	if ((sock_fd = socket(remote.ai_family, remote.ai_socktype, remote.ai_protocol)) == -1) 
-	{
-		cout << "Can't open socket\n";
-		exit(1);
-	}	
-	setsockopt(sock_fd, SOL_SOCKET, SO_SNDBUF, &buff_size, (int)sizeof(buff_size));
-	if (connect(sock_fd, (struct sockaddr *) &remote_addr, sizeof remote_addr) == -1) 
-	{
-		cout << "Can't connect\n";
-		close(sock_fd);
-		exit(1);
-	}
 	
 	for (int i=0;i<iterations;i++)
 	{
@@ -61,23 +46,39 @@ int main()
 		for (int j=0;j<10;j++)
 		{
 			getStartTick(start);
-			int n = send(sock_fd, message.c_str(), ONE_MB, 0);
-//			cout <<" " << n << "\n";
+			if ((sock_fd = socket(remote.ai_family, remote.ai_socktype, remote.ai_protocol)) == -1) 
+			{
+				cout << "Can't open socket\n";
+				exit(1);
+			}	
+
+			if (connect(sock_fd, (struct sockaddr *) &remote_addr, sizeof remote_addr) == -1) 
+			{
+				cout << "Can't connect\n";
+				close(sock_fd);
+				exit(1);
+			}
 			getEndTick(end);
-        		
+        		close(sock_fd);
+			
 			sum += end - start;
         	}
 		sum /= 10;
 		results[i] = sum;
         }
-	close(sock_fd);
-			
-	writeToFile(results,"peakbwCycles.txt");
+	
+	writeToFile(results,"setupRemoteCycles.txt");
 	getTimeFromTicks(results);
-	writeToFile(results,"peakbwTime.txt");
+	writeToFile(results,"setupRemoteTime.txt");
 	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
-	cout << "Peak BW mean= " << meanAndVariance.first << "\n";
-	cout << "Peak BW variance= " << meanAndVariance.second << "\n";
+	cout << "Setup mean= " << meanAndVariance.first << "\n";
+	cout << "Setup variance= " << meanAndVariance.second << "\n";
+	
+	ofstream myfile;
+	myfile.open ("SetupRemoteResults.txt");
+	myfile << "Setup mean= " << meanAndVariance.first << "\n";
+	myfile << "Setup variance= " << meanAndVariance.second << "\n";
+	myfile.close();
 	
 	return 0;
 }

@@ -7,6 +7,8 @@
 using namespace std;
 #define iterations 1000
 # define innerLoop 100
+# define ADDR "127.0.0.1"
+# define ADDR_REMOTE "192.168.0.19"
 
 void writeToFile(double *results,string fileName )
 {

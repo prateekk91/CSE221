@@ -73,12 +73,18 @@ int main()
 		results[i] = sum;
         }
 	close(sock_fd);
-	writeToFile(results,"rttCycles.txt");
+	writeToFile(results,"rttLocalCycles.txt");
 	getTimeFromTicks(results);
-	writeToFile(results,"rttTime.txt");
+	writeToFile(results,"rttTLocalime.txt");
 	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
-	cout << "Rtt mean= " << meanAndVariance.first << "\n";
-	cout << "Rtt variance= " << meanAndVariance.second << "\n";
+	cout << "Local Rtt mean= " << meanAndVariance.first << "\n";
+	cout << "Local Rtt variance= " << meanAndVariance.second << "\n";
+	
+	ofstream myfile;
+	myfile.open ("rttLocalResults.txt");
+	myfile << "Local Rtt mean= " << meanAndVariance.first << "\n";
+	myfile << "Local Rtt variance= " << meanAndVariance.second << "\n";
+	myfile.close();
 	
 	return 0;
 }

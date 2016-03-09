@@ -36,7 +36,7 @@ int main()
 	remote.ai_family = AF_INET;
 	remote.ai_socktype = SOCK_STREAM;
 
-	raddr.s_addr = inet_addr(ADDR);
+	raddr.s_addr = inet_addr(ADDR_REMOTE);
 
 	remote_addr.sin_family = AF_INET;
 	remote_addr.sin_port = htons(PORT);
@@ -62,22 +62,25 @@ int main()
 		{
 			getStartTick(start);
 			int n = send(sock_fd, message.c_str(), ONE_MB, 0);
-//			cout <<" " << n << "\n";
 			getEndTick(end);
-        		
-			sum += end - start;
+        		sum += end - start;
         	}
 		sum /= 10;
 		results[i] = sum;
         }
 	close(sock_fd);
-			
-	writeToFile(results,"peakbwCycles.txt");
+	writeToFile(results,"peakbwRemoteCycles.txt");
 	getTimeFromTicks(results);
-	writeToFile(results,"peakbwTime.txt");
+	writeToFile(results,"peakbwRemoteTime.txt");
 	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
 	cout << "Peak BW mean= " << meanAndVariance.first << "\n";
 	cout << "Peak BW variance= " << meanAndVariance.second << "\n";
+	
+	ofstream myfile;
+	myfile.open ("peakBwRemoteResults.txt");
+	myfile << "Peak Bw mean= " << meanAndVariance.first << "\n";
+	myfile << "Peak Bw variance= " << meanAndVariance.second << "\n";
+	myfile.close();
 	
 	return 0;
 }

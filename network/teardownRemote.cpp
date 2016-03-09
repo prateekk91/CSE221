@@ -17,8 +17,6 @@
 #include <fcntl.h>
 # define PORT 7000
 # define BYTES 56
-# define ONE_MB 1024*1024
-# define FIVE_MB 5*ONE_MB
 int main()
 {
 	warmUp();
@@ -28,41 +26,39 @@ int main()
 	struct addrinfo remote;
 	struct sockaddr_in remote_addr;
 	struct in_addr raddr;
-//	char buffer[ONE_MB];
+	char buffer[BYTES];
 	string message = "";
-	int buff_size = ONE_MB;
-	message.append(FIVE_MB, '.');
+
+	message.append(BYTES, '.');
 
 	remote.ai_family = AF_INET;
 	remote.ai_socktype = SOCK_STREAM;
 
-	raddr.s_addr = inet_addr(ADDR);
+	raddr.s_addr = inet_addr(ADDR_REMOTE);
 
 	remote_addr.sin_family = AF_INET;
 	remote_addr.sin_port = htons(PORT);
 	remote_addr.sin_addr = raddr;
-	
-	if ((sock_fd = socket(remote.ai_family, remote.ai_socktype, remote.ai_protocol)) == -1) 
-	{
-		cout << "Can't open socket\n";
-		exit(1);
-	}	
-	setsockopt(sock_fd, SOL_SOCKET, SO_SNDBUF, &buff_size, (int)sizeof(buff_size));
-	if (connect(sock_fd, (struct sockaddr *) &remote_addr, sizeof remote_addr) == -1) 
-	{
-		cout << "Can't connect\n";
-		close(sock_fd);
-		exit(1);
-	}
 	
 	for (int i=0;i<iterations;i++)
 	{
 		sum = 0;
 		for (int j=0;j<10;j++)
 		{
+			if ((sock_fd = socket(remote.ai_family, remote.ai_socktype, remote.ai_protocol)) == -1) 
+			{
+				cout << "Can't open socket\n";
+				exit(1);
+			}	
+
+			if (connect(sock_fd, (struct sockaddr *) &remote_addr, sizeof remote_addr) == -1) 
+			{
+				cout << "Can't connect\n";
+				close(sock_fd);
+				exit(1);
+			}
 			getStartTick(start);
-			int n = send(sock_fd, message.c_str(), ONE_MB, 0);
-//			cout <<" " << n << "\n";
+			close(sock_fd);
 			getEndTick(end);
         		
 			sum += end - start;
@@ -70,14 +66,18 @@ int main()
 		sum /= 10;
 		results[i] = sum;
         }
-	close(sock_fd);
-			
-	writeToFile(results,"peakbwCycles.txt");
-	getTimeFromTicks(results);
-	writeToFile(results,"peakbwTime.txt");
-	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
-	cout << "Peak BW mean= " << meanAndVariance.first << "\n";
-	cout << "Peak BW variance= " << meanAndVariance.second << "\n";
 	
+	writeToFile(results,"teardownRemoteCycles.txt");
+	getTimeFromTicks(results);
+	writeToFile(results,"teardownRemoteTime.txt");
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
+	cout << "Teardown mean= " << meanAndVariance.first << "\n";
+	cout << "Teardown variance= " << meanAndVariance.second << "\n";
+	
+	ofstream myfile;
+	myfile.open ("tearDownRemoteResults.txt");
+	myfile << "Teardown mean= " << meanAndVariance.first << "\n";
+	myfile << "Teardown variance= " << meanAndVariance.second << "\n";
+	myfile.close();
 	return 0;
 }
