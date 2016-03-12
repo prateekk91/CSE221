@@ -58,7 +58,7 @@ int main()
 		cout << "File: " << files[k] << "\n";
 		cout << "File read mean= " << meanAndVariance.first << "\n";
 		cout << "File read variance= " << meanAndVariance.second << "\n";
-		cout << "Average read time=" << (meanAndVariance.first * ONE_MB / fileSize) << "\n";
+		cout << "Average read time=" << 1000000000 / (meanAndVariance.first * ONE_MB / fileSize) << "\n";
 		
 		ofstream myfile;
 		fileName = files[k] + "FileCacheResults";
@@ -66,7 +66,7 @@ int main()
   		myfile << "File: " << files[k] << "\n";
 		myfile << "File read mean= " << meanAndVariance.first << "\n";
 		myfile << "File read variance= " << meanAndVariance.second << "\n";
-		myfile << "Average read time=" << (meanAndVariance.first * ONE_MB / fileSize) << "\n";
+		myfile << "Average read time=" << 1000000000 / (meanAndVariance.first * ONE_MB / fileSize) << "\n";
 		myfile.close();
 		fileSize *= 2;
 		

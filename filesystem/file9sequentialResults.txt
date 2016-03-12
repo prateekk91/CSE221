@@ -1,0 +1,3 @@
+File: file9
+File read mean= 74856.4
+File read variance= 5.05529e+10

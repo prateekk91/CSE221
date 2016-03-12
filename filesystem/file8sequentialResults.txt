@@ -1,0 +1,3 @@
+File: file8
+File read mean= 72320.8
+File read variance= 2.56934e+10

@@ -20,16 +20,16 @@ int main()
 	string prefix = "";
 	string files[] = {"file1", "file2", "file3", "file4", "file5", "file6", "file7", "file8", "file9"};
 	long long int fileSize = 32*1024*1024;
-	double results[lessIter], sum;
+	double results[middleIters], sum;
 	for (int k=0;k<9;k++)
 	{
 		long long int total_blocks = fileSize / FOUR_KB;
 			
-		for(int i=0;i<lessIter;++i)
+		for(int i=0;i<middleIters;++i)
 		{
 			sum = 0;
 				
-			for (int j=0;j<lessInner;j++)
+			for (int j=0;j<middleInner;j++)
 			{
 				int fd = open((prefix+files[k]).c_str(), O_DIRECT);
 				int n;
@@ -55,24 +55,24 @@ int main()
 				close (fd);
 				sum += end - start;	
 			}
-			sum /= lessInner;
+			sum /= middleInner;
 			results[i] = sum;
 		}
 		string fileName = files[k] + "RandomCycles.txt";
 		string fileTimeName = files[k] + "RandomTime.txt";
 		writeToFile(results, fileName);
-		getTimeFromTicks(results, lessIter);
+		getTimeFromTicks(results, middleIters);
 		writeToFile(results, fileTimeName);
-		pair<double, double> meanAndVariance = getMeanAndVariance(results, lessIter);
+		pair<double, double> meanAndVariance = getMeanAndVariance(results, middleIters);
 		cout << "File: " << files[k] << "\n";
-		cout << "File read mean= " << meanAndVariance.first << "\n";
-		cout << "File read variance= " << meanAndVariance.second << "\n";
+		cout << "File read mean= " << (meanAndVariance.first * FOUR_KB / READLIMIT) << "\n";
+		cout << "File read variance= " << (meanAndVariance.second * FOUR_KB / READLIMIT) << "\n";
 		
 		ofstream myfile;
 		myfile.open ((files[k] + "randomResults.txt").c_str());
   		myfile << "File: " << files[k] << "\n";
-		myfile << "File read mean= " << meanAndVariance.first << "\n";
-		myfile << "File read variance= " << meanAndVariance.second << "\n";
+		myfile << "File read mean= " << (meanAndVariance.first * FOUR_KB / READLIMIT) << "\n";
+		myfile << "File read variance= " << (meanAndVariance.second * FOUR_KB / READLIMIT) << "\n";
 		myfile << "File read speed in MBPS = " << (READLIMIT*1000000000L * 1.0/(1024*1024))/meanAndVariance.first;
 		fileSize *= 2;
 		myfile.close();

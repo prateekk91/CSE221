@@ -1,0 +1,4 @@
+File: file5
+File read mean= 7.42642e+06
+File read variance= 4.44621e+12
+File read speed in MBPS = 0.525993
