@@ -1,2 +1,2 @@
-Remote Rtt mean= 2.18901e+06
-Remote Rtt variance= 2.72828e+11
+Remote Rtt mean= 3.02892e+06
+Remote Rtt variance= 2.10512e+11

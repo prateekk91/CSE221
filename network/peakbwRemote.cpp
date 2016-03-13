@@ -16,14 +16,14 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 # define PORT 7000
-# define BYTES 56
+# define BYTES 1024*208
 # define ONE_MB 1024*1024
 # define FIVE_MB 5*ONE_MB
 int main()
 {
 	warmUp();
 	uint64_t start,end;
-	double results[iterations], sum;
+	double results[middleIters], sum;
 	int sock_fd, status, bytes_read;
 	struct addrinfo remote;
 	struct sockaddr_in remote_addr;
@@ -55,15 +55,13 @@ int main()
 		exit(1);
 	}
 	
-	for (int i=0;i<iterations;i++)
+	for (int i=0;i<middleIters;i++)
 	{
 		sum = 0;
-		cout << i << "\n";
-	
 		for (int j=0;j<1;j++)
 		{
 			getStartTick(start);
-			int n = send(sock_fd, message.c_str(), ONE_MB, 0);
+			send(sock_fd, message.c_str(), BYTES, 0);
 			getEndTick(end);
         		sum += end - start;
         	}
@@ -74,14 +72,16 @@ int main()
 	writeToFile(results,"peakbwRemoteCycles.txt");
 	getTimeFromTicks(results);
 	writeToFile(results,"peakbwRemoteTime.txt");
-	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
+	pair<double, double> meanAndVariance = getMeanAndVariance(results, middleIters);
 	cout << "Peak BW mean= " << meanAndVariance.first << "\n";
 	cout << "Peak BW variance= " << meanAndVariance.second << "\n";
+	cout << "Mean bandwidth= " << 1000000 * (208/meanAndVariance.first) << "\n";
 	
 	ofstream myfile;
 	myfile.open ("peakBwRemoteResults.txt");
 	myfile << "Peak Bw mean= " << meanAndVariance.first << "\n";
 	myfile << "Peak Bw variance= " << meanAndVariance.second << "\n";
+	myfile << "Mean bandwidth= " << 1000000 * (208/meanAndVariance.first) << "\n";
 	myfile.close();
 	
 	return 0;

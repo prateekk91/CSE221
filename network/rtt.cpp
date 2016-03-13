@@ -64,9 +64,6 @@ int main()
 			bytes_read = recv(sock_fd, buffer, BYTES, 0);
 			getEndTick(end);
 //			cout << buffer << "\n";
-
-			
-        		
 			sum += end - start;
         	}
 		sum /= 10;

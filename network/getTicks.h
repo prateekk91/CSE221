@@ -5,10 +5,12 @@
 # include <utility>
 # include<algorithm>
 using namespace std;
-#define iterations 1000
+#define iterations 300
 # define innerLoop 100
 # define ADDR "127.0.0.1"
-# define ADDR_REMOTE "192.168.0.19"
+# define ADDR_REMOTE "192.168.0.106"
+# define middleIters 300
+# define middleInner 5
 
 void writeToFile(double *results,string fileName )
 {
