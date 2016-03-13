@@ -1,0 +1,2 @@
+Local Rtt mean= 16749.5
+Local Rtt variance= 4.70019e+07

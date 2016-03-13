@@ -1,0 +1,2 @@
+Teardown mean= 24790.3
+Teardown variance= 2.66947e+07

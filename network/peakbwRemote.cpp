@@ -58,14 +58,16 @@ int main()
 	for (int i=0;i<iterations;i++)
 	{
 		sum = 0;
-		for (int j=0;j<10;j++)
+		cout << i << "\n";
+	
+		for (int j=0;j<1;j++)
 		{
 			getStartTick(start);
 			int n = send(sock_fd, message.c_str(), ONE_MB, 0);
 			getEndTick(end);
         		sum += end - start;
         	}
-		sum /= 10;
+		sum /= 1;
 		results[i] = sum;
         }
 	close(sock_fd);

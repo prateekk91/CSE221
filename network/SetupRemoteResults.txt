@@ -1,0 +1,2 @@
+Setup mean= 4.17374e+06
+Setup variance= 3.53624e+11

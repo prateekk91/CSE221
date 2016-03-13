@@ -1,0 +1,2 @@
+Peak Bw mean= 9.57272e+08
+Peak Bw variance= 1.02757e+16
