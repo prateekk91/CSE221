@@ -7,8 +7,10 @@
 using namespace std;
 #define iterations 1000
 # define innerLoop 100
-# define lessIter 100
-# define lessInner 10
+# define lessIter 10
+# define lessInner 1
+# define middleIters 20
+# define middleInner 5
 
 void writeToFile(double *results,string fileName )
 {
@@ -58,7 +60,7 @@ pair<double, double> inline getMeanAndVariance(double *results, int iters)
 {
 	double sum = 0;
 	double sigma = 0;
-	int diff = iters == lessIter ? 0 : 10;
+	int diff = iters == iterations ? 10 : 0;
 	sort(results, results+iters);
 	cout << "Median value = " << results[iters/2] << endl;
 	for (int i=diff;i<iters-diff;i++)

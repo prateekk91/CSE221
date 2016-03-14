@@ -11,7 +11,7 @@
 # include <string>
 #include <stdlib.h>
 # define FOUR_KB 4096
-# define READLIMIT 4096000
+# define READLIMIT 409600
 int main()
 {
 	warmUp();
@@ -27,14 +27,11 @@ int main()
 			sum = 0;
 			for (int j=0;j<lessInner;j++)
 			{
-				cout << "here\n";
 				int fd = open((prefix + files[k]).c_str(), O_RDONLY | O_DIRECT);
 				if (fd <= 0)
 				{
 					cout << "open failed\n";
 				}
-				else
-					cout << "Fd=" << fd << "\n";
 				int n;
 				getStartTick(start);
 				int tot = 0;
@@ -62,14 +59,14 @@ int main()
 		writeToFile(results, fileTimeName);
 		pair<double, double> meanAndVariance = getMeanAndVariance(results, lessIter);
 		cout << "File: " << files[k] << "\n";
-		cout << "File read mean= " << meanAndVariance.first << "\n";
-		cout << "File read variance= " << meanAndVariance.second << "\n";
+		cout << "File read mean= " << (meanAndVariance.first * FOUR_KB / READLIMIT) << "\n";
+		cout << "File read variance= " << (meanAndVariance.second * FOUR_KB / READLIMIT) << "\n";
 		
 		ofstream myfile;
 		myfile.open ( (files[k] + "SequentialRemoteResults.txt").c_str());
   		myfile << "File: " << files[k] << "\n";
-		myfile << "File read mean= " << meanAndVariance.first << "\n";
-		myfile << "File read variance= " << meanAndVariance.second << "\n";
+		myfile << "File read mean= " << (meanAndVariance.first * FOUR_KB / READLIMIT) << "\n";
+		myfile << "File read variance= " << (meanAndVariance.second * FOUR_KB / READLIMIT) << "\n";
 		myfile.close();
 		
 	}

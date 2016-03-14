@@ -19,9 +19,9 @@ int main()
 	uint64_t start,end;
 	static char buffer[FOUR_KB] __attribute__ ((__aligned__ (FOUR_KB)));
 	string prefix = "";
-	string files[] = {"file1", "file2", "file3", "file4", "file5", "file6", "file7", "file8", "file9"};
+	string files[] = {"file1", "file2", "file3", "file4", "file5", "file6", "file7", "file8", "file9", "file10"};
 	double results[middleIters], sum;
-	for (int k=0;k<9;k++)
+	for (int k=0;k<10;k++)
 	{
 		for(int i=0;i<middleIters;++i)
 		{

@@ -65,14 +65,14 @@ int main()
 		writeToFile(results, fileTimeName);
 		pair<double, double> meanAndVariance = getMeanAndVariance(results, lessIter);
 		cout << "File: " << files[k] << "\n";
-		cout << "File read mean= " << meanAndVariance.first << "\n";
-		cout << "File read variance= " << meanAndVariance.second << "\n";
+		cout << "File read mean= " << (meanAndVariance.first * FOUR_KB / READLIMIT) << "\n";
+		cout << "File read variance= " << (meanAndVariance.second * FOUR_KB / READLIMIT) << "\n";
 		
 		ofstream myfile;
 		myfile.open ( (files[k] + "RandomRemoteResults.txt").c_str());
   		myfile << "File: " << files[k] << "\n";
-		myfile << "File read mean= " << meanAndVariance.first << "\n";
-		myfile << "File read variance= " << meanAndVariance.second << "\n";
+		myfile << "File read mean= " << (meanAndVariance.first * FOUR_KB / READLIMIT) << "\n";
+		myfile << "File read variance= " << (meanAndVariance.second * FOUR_KB / READLIMIT) << "\n";
 		myfile << "File read speed in MBPS = " << (READLIMIT*1000000000L * 1.0/(1024*1024))/meanAndVariance.first;
 		fileSize *= 2;
 		myfile.close();
