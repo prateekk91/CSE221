@@ -75,5 +75,11 @@ int main()
 	cout << "Setup mean= " << meanAndVariance.first << "\n";
 	cout << "Setup variance= " << meanAndVariance.second << "\n";
 	
+	ofstream myfile;
+	myfile.open ("SetupLocalResults.txt");
+	myfile << "Setup mean= " << meanAndVariance.first << "\n";
+	myfile << "Setup variance= " << meanAndVariance.second << "\n";
+	myfile.close();
+	
 	return 0;
 }

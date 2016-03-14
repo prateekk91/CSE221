@@ -75,5 +75,12 @@ int main()
 	cout << "Teardown mean= " << meanAndVariance.first << "\n";
 	cout << "Teardown variance= " << meanAndVariance.second << "\n";
 	
+	ofstream myfile;
+	myfile.open ("tearDownLocalResults.txt");
+	myfile << "Teardown mean= " << meanAndVariance.first << "\n";
+	myfile << "Teardown variance= " << meanAndVariance.second << "\n";
+	myfile.close();
+	return 0;
+	
 	return 0;
 }

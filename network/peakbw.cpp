@@ -70,19 +70,19 @@ int main()
 		results[i] = sum;
         }
 	close(sock_fd);
-	writeToFile(results,"rttLocalCycles.txt");
+	writeToFile(results,"peakBwLocalCycles.txt");
 	getTimeFromTicks(results);
-	writeToFile(results,"rttTLocalime.txt");
+	writeToFile(results,"peakBwLocalime.txt");
 	pair<double, double> meanAndVariance = getMeanAndVariance(results, iterations);
-	cout << "Local Rtt mean= " << meanAndVariance.first << "\n";
-	cout << "Local Rtt variance= " << meanAndVariance.second << "\n";
-	cout << "Mean bandwidth= " << 1000000 * (208/meanAndVariance.first) << "\n";
+	cout << "Peak bw mean= " << meanAndVariance.first << "\n";
+	cout << "Peak bw variance= " << meanAndVariance.second << "\n";
+	cout << "Peak bw bandwidth= " << 1000000 * (208/meanAndVariance.first) << "\n";
 	
 	ofstream myfile;
-	myfile.open ("rttLocalResults.txt");
-	myfile << "Local Rtt mean= " << meanAndVariance.first << "\n";
-	myfile << "Local Rtt variance= " << meanAndVariance.second << "\n";
-	myfile << "Mean bandwidth= " << 1000000 * (208/meanAndVariance.first) << "\n";
+	myfile.open ("peakBwLocalResults.txt");
+	myfile << "Peak bw mean= " << meanAndVariance.first << "\n";
+	myfile << "Peak bw variance= " << meanAndVariance.second << "\n";
+	myfile << "Peak bandwidth= " << 1000000 * (208/meanAndVariance.first) << "\n";
 	myfile.close();
 	
 	return 0;

@@ -1,3 +1,2 @@
-Local Rtt mean= 41808.6
-Local Rtt variance= 5.82721e+07
-Mean bandwidth= 4975.05
+Local Rtt mean= 5329.53
+Local Rtt variance= 229017

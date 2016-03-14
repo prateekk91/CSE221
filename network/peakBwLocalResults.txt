@@ -1,0 +1,3 @@
+Peak bw mean= 42052.9
+Peak bw variance= 4.17132e+07
+Peak bandwidth= 4946.15

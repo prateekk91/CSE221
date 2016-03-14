@@ -56,6 +56,7 @@ int main()
 	for (int i=0;i<iterations;i++)
 	{
 		sum = 0;
+		int tot = 0;
 		for (int j=0;j<10;j++)
 		{
 
@@ -63,10 +64,11 @@ int main()
 			send(sock_fd, message.c_str(), BYTES, 0);
 			bytes_read = recv(sock_fd, buffer, BYTES, 0);
 			getEndTick(end);
+//			tot += bytes_read;
 //			cout << buffer << "\n";
 			sum += end - start;
         	}
-		sum /= 10;
+        	sum /= 10;
 		results[i] = sum;
         }
 	close(sock_fd);
